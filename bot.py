@@ -75,21 +75,24 @@ def unPinMessage(message):
 @bot.message_handler(commands=['infou'])
 def userInfo(message):
 	if message.reply_to_message!=None:
-		bot.send_message(message.chat.id,f"Айди учатника: {message.reply_to_message.from_user.id}")
+		bot.send_message(message.chat.id,f"Он [{message.reply_to_message.from_user.first_name}](tg://user?id={message.reply_to_message.from_user.id})\nЕго айди: {message.reply_to_message.from_user.id}",parse_mode = "markdown")
 	else:
 		bot.send_message(message.chat.id,f"Вы [{message.from_user.first_name}](tg://user?id={message.from_user.id})\nВаш айди: {message.from_user.id}" ,parse_mode = "markdown")
 
 @bot.message_handler(commands=['infom'])
 def messageInfo(message):
 	if message.reply_to_message!=None:
-		bot.send_message(message.chat.id,f"Айди сообщения: {message.reply_to_message.message_id}")
+		bot.send_message(message.chat.id,f"Айди сообщения: {message.reply_to_message.message_id}\nКто его писал: [message.reply_to_message.from_user.first_name](tg://user?id={message.reply_to_message.from_user.id})",parse_mode = "markdown")
+	else:
+		bot.send_message(message.chat.id,"Отвечайте на чье-либо сообщение!")
 	
 @bot.message_handler(commands=['rules'])
 def rules(message):
-	if message.chat.id==-1001317298639:
+	chatId=rulesColl.find_one({"chatid": {'$exists': True}})
+	if message.chat.id==chatId:
 		rulesid=rulesColl.find_one({"rules": {'$exists': True}})
-		rulesChatId=rulesColl.find_one({"chatid": {'$exists': True}})
-		bot.forward_message(message.chat.id,f"{rulesChatId['chatid']}",f"{rulesid['rules']}")
+		rulesChatOtId=rulesColl.find_one({"otchatid": {'$exists': True}})
+		bot.forward_message(message.chat.id,f"{rulesChatOtId['otchatid']}",f"{rulesid['rules']}")
 
 @bot.message_handler(commands=['newrules'])
 def newrules(message):
@@ -97,7 +100,7 @@ def newrules(message):
 		user = bot.get_chat_member(message.chat.id, message.from_user.id)										
 		if user.status == 'creator' or user.status == 'administrator':
 			deleterules = rulesColl.delete_many ({})
-			newrules = { "rules": message.reply_to_message.message_id,"chatid":message.chat.id}
+			newrules = { "rules": message.reply_to_message.message_id,"otchatid":message.chat.id,"chatid":message.chat.id}
 			rulesColl.insert_one(newrules)
 			bot.send_message(message.chat.id,"Правила установлены!")	
 		else:
