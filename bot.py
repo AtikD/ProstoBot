@@ -21,6 +21,11 @@ bot=telebot.TeleBot(os.environ["TELEGRAM_TOKEN"])
 def start_message(message):
   bot.send_message(message.chat.id,"Привет! Подробно в /help")
 
+@bot.message_handler(commands=['ktoya'])
+def kto_Ya(message):
+	ktoya=[Квантовый бомж,Квантовый компьютер, Сверх-мощный придурок]
+  bot.send_message(message.chat.id,f"Вы {random.choice(ktoya)}!")
+
 @bot.message_handler(commands=['help'])
 def help_message(message):
   bot.send_message(message.chat.id,"Команды:\n/rules - Правила чата.\n/adminshelp - Команды для админов.")
@@ -140,22 +145,6 @@ def addRuletka(message):
 							
 	else:
 		bot.send_message(message.chat.id,"/addruletka Значение(имя,кличка и т.д.)"
-
-@bot.message_handler(commands=['gay'])
-def start_message(message):
-  bot.send_message("Гей чата будет "###):
-@bot.message_handler(content_types=['text'])
-def text_content(message):
-	chatid=coll.find_one({'chatid':message.chat.id})
-	if chatid==None:
-		reg1 = { "chatid": message.chat.id,"ctrl":0 }
-		coll.insert_one(reg)
-  else:
-    chatid=coll.find_one({'chatid':message.chat.id})
-    if chatid!=None:
-      for ids in chatid['users']:
-        if chatid['users'][ids]['name'] == username1:
-'''
 
 
 
