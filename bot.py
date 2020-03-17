@@ -93,7 +93,7 @@ def messageInfo(message):
 	
 @bot.message_handler(commands=['rules'])
 def rules(message):
-	chatId=rulesColl.find_one({"chatid": {'$exists': True}})
+	chatId=rulesColl.find_one({"chatid": message.chat.id})
 	if message.chat.id==chatId:
 		rulesid=rulesColl.find_one({"rules": {'$exists': True}})
 		rulesChatOtId=rulesColl.find_one({"otchatid": {'$exists': True}})
