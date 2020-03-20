@@ -147,5 +147,5 @@ def addRuletka(message):
 		bot.send_message(message.chat.id,"/addruletka Значение(имя,кличка и т.д.)"
 
 
-
+'''
 bot.polling(none_stop=True)
