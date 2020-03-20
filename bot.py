@@ -23,8 +23,8 @@ def start_message(message):
 
 @bot.message_handler(commands=['ktoya'])
 def kto_Ya(message):
-	ktoya=[Квантовый бомж,Квантовый компьютер, Сверх-мощный придурок]
-  bot.send_message(message.chat.id,f"Вы {random.choice(ktoya)}!")
+	ktoya=["Квантовый бомж","Квантовый компьютер", "Сверх-мощный придурок"]
+	bot.send_message(message.chat.id,f"Вы {random.choice(ktoya)}!")
 
 @bot.message_handler(commands=['help'])
 def help_message(message):
