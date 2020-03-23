@@ -95,7 +95,7 @@ def messageInfo(message):
 def rules(message):
 	chatId=rulesColl.find_one({"chatid": message.chat.id})
 	if message.chat.id==chatId:
-		rulesid=rulesColl.find_one({"rules": {'$exists': True}})
+		rulesid=rulesColl.find_one({"rules": message.chat.id})
 		rulesChatOtId=rulesColl.find_one({"otchatid": {'$exists': True}})
 		bot.forward_message(message.chat.id,f"{rulesChatOtId['otchatid']}",f"{rulesid['rules']}")
 
