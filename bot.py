@@ -13,9 +13,11 @@ ruletkaColl=db.ruletka
 
 uuidID = uuid.uuid1() 
 
-admins2=adminsColl.find_one({"ID": 2552})
+
 
 bot=telebot.TeleBot(os.environ["TELEGRAM_TOKEN"])
+
+bot.send_message(512177277, "Бот был перезапущен!")
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -23,7 +25,7 @@ def start_message(message):
 
 @bot.message_handler(commands=['ktoya'])
 def kto_Ya(message):
-	ktoya=["Квантовый бомж","Квантовый компьютер", "Сверх-мощный придурок"]
+	ktoya=['Квантовый бомж','Квантовый компьютер', 'Сверх-мощный придурок']
 	bot.send_message(message.chat.id,f"Вы {random.choice(ktoya)}!")
 
 @bot.message_handler(commands=['help'])
