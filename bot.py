@@ -106,7 +106,7 @@ def rules(message):
 		rulesChatOtId=rulesColl.find_one({"otchatid": {'$exists': True}})
 		bot.forward_message(message.chat.id,f"{rulesChatOtId['otchatid']}",f"{rulesid['rules']}")
 
-@bot.message_handler(commands=['newrules'])parse_mode = "markdown"
+@bot.message_handler(commands=['newrules'])
 def newrules(message):
 	if message.reply_to_message!=None:
 		user = bot.get_chat_member(message.chat.id, message.from_user.id)										
