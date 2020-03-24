@@ -35,7 +35,7 @@ def kto_Ya(message):
 
 @bot.message_handler(commands=['help'])
 def help_message(message):
-  bot.send_message(message.chat.id,"Команды:\n/rules - Правила чата.\n/adminshelp - Команды для админов.")
+  bot.send_message(message.chat.id,"Команды:\n/rules - Правила чата.\n/adminshelp - Команды для админов чата.")
 
 @bot.message_handler(commands=['adminshelp'])
 def admins_command(message):
