@@ -26,7 +26,7 @@ def start_message(message):
 @bot.message_handler(commands=['bezuzer'])
 def bezUzera_message(message):	
 	idd = message.text.split(' ')[1]
-	bot.send_message(message.chat.id,f"[User](tg://user?id={idd}))")
+	bot.send_message(message.chat.id,f"[User](tg://user?id={idd}))",parse_mode = "markdown")
 
 @bot.message_handler(commands=['ktoya'])
 def kto_Ya(message):
@@ -106,7 +106,7 @@ def rules(message):
 		rulesChatOtId=rulesColl.find_one({"otchatid": {'$exists': True}})
 		bot.forward_message(message.chat.id,f"{rulesChatOtId['otchatid']}",f"{rulesid['rules']}")
 
-@bot.message_handler(commands=['newrules'])
+@bot.message_handler(commands=['newrules'])parse_mode = "markdown"
 def newrules(message):
 	if message.reply_to_message!=None:
 		user = bot.get_chat_member(message.chat.id, message.from_user.id)										
