@@ -26,10 +26,7 @@ def start_message(message):
 @bot.message_handler(commands=['bezuzer'])
 def bezUzera_message(message):	
 	idd = message.text.split(' ')[1]
-	if message.text.split(' ')==[1]:
-		bot.send_message(message.chat.id,f"[User](tg://user?id={idd}))")
-	else:
-		bot.send_message(message.chat.id,"Reply to message")
+	bot.send_message(message.chat.id,f"[User](tg://user?id={idd}))")
 
 @bot.message_handler(commands=['ktoya'])
 def kto_Ya(message):
