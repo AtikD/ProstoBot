@@ -8,7 +8,6 @@ import random
 client = MongoClient(os.environ["MongoDB"])
 db = client.main
 rulesColl = db.rules
-adminsColl=db.admins
 ruletkaColl=db.ruletka
 
 uuidID = uuid.uuid1() 
@@ -51,11 +50,10 @@ def chatInfo(message):
 
 @bot.message_handler(commands=['randomnumber'])
 def randomNumber(message):
+	num=message.text.split(' ')
 	if message.text.split(' ')==[1]:	
 		if message.text.split(' ')==[2]:
-			num1=message.text.split(' ')[1]
-			num2=message.text.split(' ')[2]
-			randn1=random.randint(num1,num2)
+			randn1=random.randint(num[1],num[2])
 			bot.send_message(message.chat.id,F"{randn1}")
 		else:
 			bot.send_message(message.chat.id,"/randomnumber {число1} {число2}")
@@ -118,5 +116,60 @@ def newrules(message):
 			bot.send_message(message.chat.id,"Правила установлены!")	
 		else:
 			bot.send_message(message.chat.id,"Вы не администратор чата!")
+				    
+bot.message_handler(commands=['create_ruletka'])
+def createRuleka(message):
+	ruletkaChat=ruletkaColl.find_one({"chatid": message.chat.id})
+	if ruletkaChat == None:
+		newRuletka = { "chatid": message.chat.id,"ctrl":"0"}
+		ruletkaColl.insert_one(newRuletka)	
+		bot.send_message(message.chat.id,"Рулетка успешно создана!")
+	else:
+		bot.send_message(message.chat.id,"В этом чате уже создана рулетка!")
+				 
+@bot.message_handler(commands=['remove_ruletka'])
+def removeRuletka(message):
+	ruletkaChat=ruletkaColl.find_one({"chatid": message.chat.id})
+	if ruletkaChat!=None:
+		removeruletka = ruletkaColl.delete_many({"chatid":message.chat.id})
+		bot.send_message(message.chat.id,"Рулетка удалена.")
+	else:
+		bot.send_message(message.chat.id,"Рулетка еще не была создана!")
+		
+@bot.message_handler(commands=['randomnumber'])
+def randomNumber(message):
+	num=message.text.split(' ')
+	if message.text.split(' ')==[1]:	
+		if message.text.split(' ')==[2]:
+			randn1=random.randint(num[1],num[2])
+			bot.send_message(message.chat.id,F"{randn1}")
+		else:
+			bot.send_message(message.chat.id,"/randomnumber {число1} {число2}")
+	else:	
+		randn2=random.randint(0,100)
+		bot.send_message(message.chat.id,F"{randn2}")
+		
+'''							
+@bot.message_handler(commands=['addruletka'])
+def addRuletka(message):
+	ruletkaChat=ruletkaColl.find_one({"chatid": message.chat.id})	
+	if ruletkaChat != None:
+		addruletka = message.text.split(' ')
+		if len(addruletka)==2:
+			if len(addruletka[1])<=18:
+				for ids in ruletkaChat['ctrl']:
+					if x['ctrl'][ids]['name'] != addruletka:
+						ruletkaColl.update_one({"chatid":message.chat.id }, {'$set':{repr(uuidID.bytes): addruletka[1]}})
+						bot.send_message(message.chat.id,"Значение успешно добавлено в рулетку!")
+					else:
+						bot.send_message(message.chat.id,"Такое значение уже существует в рулетке!")	
+			else:
+				bot.send_message(message.chat.id,"Длина значения не должна превышать 18 символов!")	
+		else:
+			bot.send_message(message.chat.id,"/addruletka Значение(имя,кличка и т.д.).\nПример:\n/addruletka cat")
+	else:
+		bot.send_message(message.chat.id,"Рулетка еще не была создана!")
+'''
+
 
 bot.polling(none_stop=True)
