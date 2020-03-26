@@ -68,6 +68,7 @@ def PinMessage(message):
 	if message.reply_to_message!=None:
 		user = bot.get_chat_member(message.chat.id, message.from_user.id)
 		if user.status == 'creator' or user.status == 'administrator':
+			print(user)
 			bot.pin_chat_message(message.chat.id,message.reply_to_message.message_id)
 			bot.send_message(message.chat.id,"Успешно выполнено!")
 		else:
