@@ -117,42 +117,5 @@ def newrules(message):
 			bot.send_message(message.chat.id,"Правила установлены!")	
 		else:
 			bot.send_message(message.chat.id,"Вы не администратор чата!")
-'''											
-@bot.message_handler(commands=['create_ruletka'])
-def createRuleka(message):
-	ruletkaChat=ruletkaColl.find_one({"chatid": message.chat.id,"ctrl":0})
-	if ruletkaChat == None:
-		newRuletka = { "chatid": message.chat.id}
-		ruletkaColl.insert_one(newRuletka)	
-		bot.send_message(message.chat.id,"Рулетка успешно создана!")
-	else:
-		bot.send_message(message.chat.id,"В этом чате уже создана рулетка!")
 
-@bot.message_handler(commands=['remove_ruletka'])
-def removeRuletka(message):
-	ruletkaChat=ruletkaColl.find_one({"chatid": message.chat.id})
-	if ruletkaChat!=None:
-		removeruletka = ruletkaColl.remove({"chatid":message.chat.id})
-		bot.send_message(message.chat.id,"Рулетка удалена.")
-	else:
-		bot.send_message(message.chat.id,"Рулетка еще не была создана!")
-							
-@bot.message_handler(commands=['addruletka'])
-def addRuletka(message):
-	addruletka = message.text.split(' ')[1]
-	if message.text.split(' ')==[1]:
-		ruletkaChat=ruletkaColl.find_one({"chatid": message.chat.id})	
-		for ids in ruletkaChat['users']:
-			if x['users'][ids]['name'] != addruletka:
-				ruletkaColl.update_one({"chatid":message.chat.id }, {'$set':{repr(uuidID.bytes): addruletka}})
-				bot.send_message(message.chat.id,"Значение успешно добавлено в рулетку!")
-			else:
-				bot.send_message(message.chat.id,"Такое значение уже существует в рулетке!")
-							
-							
-	else:
-		bot.send_message(message.chat.id,"/addruletka Значение(имя,кличка и т.д.)"
-
-
-'''
 bot.polling(none_stop=True)
