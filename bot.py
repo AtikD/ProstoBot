@@ -48,18 +48,6 @@ def admins_command(message):
 def chatInfo(message):
   bot.send_message(message.chat.id,F"Айди чата: {message.chat.id}")
 
-@bot.message_handler(commands=['randomnumber'])
-def randomNumber(message):
-	num=message.text.split(' ')
-	if message.text.split(' ')==[1]:	
-		if message.text.split(' ')==[2]:
-			randn1=random.randint(num[1],num[2])
-			bot.send_message(message.chat.id,F"{randn1}")
-		else:
-			bot.send_message(message.chat.id,"/randomnumber {число1} {число2}")
-	else:	
-		randn2=random.randint(0,100)
-		bot.send_message(message.chat.id,F"{randn2}")
 
 @bot.message_handler(commands=['pin'])
 def PinMessage(message):
@@ -158,7 +146,7 @@ def addRuletka(message):
 		if len(addruletka)==2:
 			if len(addruletka[1])<=18:
 				for ids in ruletkaChat['ctrl']:
-					if x['ctrl'][ids]['name'] != addruletka:
+					if x['ctrl'][ids]['chatid'] != addruletka:
 						ruletkaColl.update_one({"chatid":message.chat.id }, {'$set':{repr(uuidID.bytes): addruletka[1]}})
 						bot.send_message(message.chat.id,"Значение успешно добавлено в рулетку!")
 					else:
